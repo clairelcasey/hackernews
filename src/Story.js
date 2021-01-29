@@ -1,11 +1,17 @@
 import React from "react";
 
+/** Story renders a li with title as a link to article
+ * 
+ * props:
+ * - title
+ * - url
+ * 
+ * state: None
+ * 
+ * StoryList -> Story
+ */
 
 class Story extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
   render() {
     console.log('Render', this.props);
 

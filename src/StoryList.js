@@ -1,10 +1,20 @@
 import React from "react";
 import axios from "axios";
-
-// import SearchForm from "./SearchForm";
+import SearchForm from "./SearchForm";
 import Story from "./Story";
 
 const BASE_URL = 'https://hn.algolia.com/api/v1/search';
+
+/** StoryList renders search form and list of story titles as links
+ * 
+ * props: None
+ * 
+ * state: 
+ * - stories: array of story objects
+ * - searchTerm: term to filter query of stories on
+ * 
+ * App -> StoryList -> { SearchForm, Story }
+ */
 
 class StoryList extends React.Component {
   constructor(props) {
@@ -14,14 +24,12 @@ class StoryList extends React.Component {
 
   state = {
     stories: [],
-    searchTerm: '',
   }
 
 
   async getStories(term="react") {
-    let query = term || this.state.searchTerm;
     let response = await axios.get(
-      `${BASE_URL}?query=${query}`);
+      `${BASE_URL}?query=${term}`);
     this.setState({ stories: response.data.hits });
   }
 
@@ -29,20 +37,14 @@ class StoryList extends React.Component {
     await this.getStories();
   }
 
-  async componentDidUpdate() {
-    if (this.state.searchTerm !== '') {
-      await this.getStories();
-    }
-  }
-
-  updateSearchTerm(newTerm) {
-    this.setState({ searchTerm: newTerm });
+  async updateSearchTerm(newTerm) {
+    await this.getStories(newTerm);
   }
 
   render() {
     return (
       <div className="StoryList">
-        {/* <SearchForm updateSearchTerm={this.updateSearchTerm}/> */}
+        <SearchForm updateSearchTerm={this.updateSearchTerm}/>
         <ul>
           {this.state.stories.map(s =>
             <Story
