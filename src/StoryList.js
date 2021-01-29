@@ -11,7 +11,6 @@ const BASE_URL = 'https://hn.algolia.com/api/v1/search';
  * 
  * state: 
  * - stories: array of story objects
- * - searchTerm: term to filter query of stories on
  * 
  * App -> StoryList -> { SearchForm, Story }
  */
@@ -37,6 +36,7 @@ class StoryList extends React.Component {
     await this.getStories();
   }
 
+  // TODO: update function name
   async updateSearchTerm(newTerm) {
     await this.getStories(newTerm);
   }
